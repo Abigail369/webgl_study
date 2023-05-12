@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <style>
+      html,
+      body,
+      #app {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      pre {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        background: #0d1117;
+        opacity: 0.8;
+        width: max-content;
+        bottom: 10px;
+        z-index: 100;
+        overflow: auto;
+      }
+
+      .sub-map {
+        width: 50%;
+        height: 50%;
+        display: inline-block;
+      }
+
+      .panel {
+        z-index: 90;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        width: 700px;
+        height: 500px;
+      }
+      .hljs {
+        font-size: 18px;
+        line-height: 30px;
+        font-family: "Courier New", Courier, monospace;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <pre id="doc">
+    <code class="hljs">
+
+    </code>
+  </pre>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

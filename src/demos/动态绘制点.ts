@@ -2,7 +2,7 @@ import _code from "./动态绘制点.ts?raw";
 import hljs from "highlight.js";
 export const code = hljs.highlight(
   "typescript",
-  _code.split("/* - split - */")[2]
+  _code.split("/*****分割线*****/")[2]
 ).value;
 
 let app = document.getElementById("app");
@@ -56,7 +56,7 @@ function drawPointByClick() {
   gl.linkProgram(program);
   gl.useProgram(program);
 
-  /* - split - */
+  /*****分割线*****/
 
   // 存储点位的数组
   let g_points: {
@@ -97,7 +97,7 @@ function drawPointByClick() {
     }
   }
 
-  /* - split - */
+  /*****分割线*****/
 }
 function numberRandom() {
   return +Math.round(Math.random()).toFixed(1);

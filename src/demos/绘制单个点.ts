@@ -2,7 +2,7 @@ import _code from "./绘制单个点.ts?raw";
 import hljs from "highlight.js";
 export const code = hljs.highlight(
   "typescript",
-  _code.split("/* - split - */")[2]
+  _code.split("/*****分割线*****/")[2]
 ).value;
 
 let app = document.getElementById("app");
@@ -23,7 +23,7 @@ export function leave() {
   canvas.remove();
 }
 
-/* - split - */
+/*****分割线*****/
 function drawPoint() {
   gl = canvas.getContext("webgl");
   if (!gl) return;

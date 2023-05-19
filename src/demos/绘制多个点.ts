@@ -2,7 +2,7 @@ import _code from "./绘制多个点.ts?raw";
 import hljs from "highlight.js";
 export const code = hljs.highlight(
   "typescript",
-  _code.split("/* - split - */")[2]
+  _code.split("/*****分割线*****/")[2]
 ).value;
 
 let canvas: HTMLCanvasElement;
@@ -57,7 +57,7 @@ function drawPointByClick() {
   gl.linkProgram(program);
   gl.useProgram(program);
 
-  /* - split - */
+  /*****分割线*****/
 
   // 创建顶点集
   const vertices = new Float32Array([0.0, 0.0, 0.5, 0.5, 0.5, -0.5]);
@@ -77,5 +77,5 @@ function drawPointByClick() {
   gl.enableVertexAttribArray(a_Position);
   gl.drawArrays(gl.POINTS, 0, n);
 
-  /* - split - */
+  /*****分割线*****/
 }

@@ -2,7 +2,7 @@ import _code from "./三角形旋转.ts?raw";
 import hljs from "highlight.js";
 export const code = hljs.highlight(
   "typescript",
-  _code.split("/* - split - */")[2]
+  _code.split("/*****分割线*****/")[2]
 ).value;
 
 let canvas: HTMLCanvasElement;
@@ -61,7 +61,7 @@ function drawTriangle() {
   gl.linkProgram(program);
   gl.useProgram(program);
 
-  /* - split - */
+  /*****分割线*****/
 
   // 创建顶点集
   const vertices = new Float32Array([0.0, 0.0, 0.5, 0.5, 0.5, -0.5]);
@@ -92,5 +92,5 @@ function drawTriangle() {
   gl.uniform1f(u_sinB, sinB);
   gl.drawArrays(gl.TRIANGLES, 0, n);
 
-  /* - split - */
+  /*****分割线*****/
 }

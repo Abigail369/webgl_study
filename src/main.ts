@@ -5,14 +5,14 @@ import "highlight.js/styles/github-dark.css";
 hljs.registerLanguage("typescript", typescript);
 const div = document.getElementById("app") as HTMLDivElement;
 const doc = document.getElementById("doc") as HTMLDivElement;
-
+doc.style.display = "none";
 const gui = new GUI({
   title: "控制面板",
 });
 gui
   .add(
     {
-      显示源码: true,
+      显示源码: false,
     },
     "显示源码"
   )

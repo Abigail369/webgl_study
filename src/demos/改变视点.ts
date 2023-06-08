@@ -33,9 +33,10 @@ function drawTriangle() {
     attribute vec4 a_Position;
     attribute vec4 a_Color;
     uniform mat4 u_ViewMatrix;
+    uniform mat4 u_ProjMatrix;
     varying vec4 v_Color;
     void main() {
-      gl_Position = u_ViewMatrix * a_Position;
+      gl_Position = u_ProjMatrix * u_ViewMatrix * a_Position;
       v_Color = a_Color;
     }
   `;
@@ -136,6 +137,12 @@ function drawTriangle() {
   const u_ViewMatrix = gl.getUniformLocation(program, "u_ViewMatrix");
   const viewMatrix = new Matrix4();
 
+  // u_ProjMatrix
+  const u_ProjMatrix = gl.getUniformLocation(program, "u_ProjMatrix");
+  const projMatrix = new Matrix4();
+  projMatrix.setOrtho(-1.0, 1.0, -1.0, 1.0, 0.0, 2.0);
+  gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
+
   let g_eyeX = 0.2,
     g_eyeY = 0.25,
     g_eyeZ = 0.25; // Eye position
@@ -162,6 +169,7 @@ function drawTriangle() {
 
   function draw() {
     if (!gl) return;
+    viewMatrix.setOrtho(-1.0, 1.0, -1.0, 1.0, 0.0, 2.0);
     viewMatrix.setLookAt(g_eyeX, g_eyeY, g_eyeZ, 0, 0, 0, 0, 1, 0);
     gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
     gl.clear(gl.COLOR_BUFFER_BIT);

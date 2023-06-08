@@ -33,10 +33,11 @@ function drawTriangle() {
     attribute vec4 a_Position;
     attribute vec4 a_Color;
     uniform mat4 u_ViewMatrix;
+    uniform mat4 u_ModelMatrix;
     varying vec4 v_Color;
     void main() {
-      gl_Position = u_ViewMatrix * a_Position;
-      // gl_Position = a_Position;
+      gl_Position = u_ViewMatrix * a_Position * u_ModelMatrix;
+      // gl_Position = u_ViewMatrix * a_Position;
       v_Color = a_Color;
     }
   `;
@@ -80,10 +81,16 @@ function drawTriangle() {
   gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, FSIZE * 6, FSIZE * 3);
   gl.enableVertexAttribArray(a_Color);
 
+  // add
+  const u_ModelMatrix = gl.getUniformLocation(program, "u_ModelMatrix");
+  const modelMatrix = new Matrix4();
+  modelMatrix.setRotate(-10, 0, 0, 1);
+
   // gl.drawArrays(gl.TRIANGLES, 0, n);
   const u_ViewMatrix = gl.getUniformLocation(program, "u_ViewMatrix");
   const viewMatrix = new Matrix4();
   viewMatrix.setLookAt(0.2, 0.25, 0.25, 0, 0, 0, 0, 1, 0);
   gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
+  gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
   gl.drawArrays(gl.TRIANGLES, 0, n);
 }

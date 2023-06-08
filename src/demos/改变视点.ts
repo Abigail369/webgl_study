@@ -1,4 +1,4 @@
-import _code from "./移动视点.ts?raw";
+import _code from "./改变视点.ts?raw";
 import hljs from "highlight.js";
 export const code = hljs.highlight(
   "typescript",
@@ -33,11 +33,9 @@ function drawTriangle() {
     attribute vec4 a_Position;
     attribute vec4 a_Color;
     uniform mat4 u_ViewMatrix;
-    uniform mat4 u_ModelMatrix;
     varying vec4 v_Color;
     void main() {
-      gl_Position = u_ViewMatrix * a_Position * u_ModelMatrix;
-      // gl_Position = u_ViewMatrix * a_Position;
+      gl_Position = u_ViewMatrix * a_Position;
       v_Color = a_Color;
     }
   `;
@@ -46,7 +44,7 @@ function drawTriangle() {
     varying vec4 v_Color;
     void main() {
       gl_FragColor = v_Color;
-    }
+    }  
   `;
 
   let vertexShader = gl.createShader(gl.VERTEX_SHADER) as WebGLShader;
@@ -61,7 +59,7 @@ function drawTriangle() {
   gl.linkProgram(program);
   gl.useProgram(program);
 
-  const verticesColors = new Float32Array([
+  let verticesColors = new Float32Array([
     // Vertex coordinates and color
     0.0,
     0.5,
@@ -120,8 +118,7 @@ function drawTriangle() {
     0.4,
     0.4,
   ]);
-
-  const n = 9;
+  let n = 9;
   const FSIZE = verticesColors.BYTES_PER_ELEMENT;
 
   let vertexBuffer = gl.createBuffer();
@@ -136,16 +133,40 @@ function drawTriangle() {
   gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, FSIZE * 6, FSIZE * 3);
   gl.enableVertexAttribArray(a_Color);
 
-  // add
-  const u_ModelMatrix = gl.getUniformLocation(program, "u_ModelMatrix");
-  const modelMatrix = new Matrix4();
-  modelMatrix.setRotate(-10, 0, 0, 1);
-
-  // gl.drawArrays(gl.TRIANGLES, 0, n);
   const u_ViewMatrix = gl.getUniformLocation(program, "u_ViewMatrix");
   const viewMatrix = new Matrix4();
-  viewMatrix.setLookAt(0.2, 0.25, 0.25, 0, 0, 0, 0, 1, 0);
-  gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
-  gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
-  gl.drawArrays(gl.TRIANGLES, 0, n);
+
+  let g_eyeX = 0.2,
+    g_eyeY = 0.25,
+    g_eyeZ = 0.25; // Eye position
+
+  document.onkeydown = function (ev) {
+    switch (ev.code) {
+      case "ArrowRight":
+        g_eyeX += 0.01;
+        break;
+      case "ArrowLeft":
+        g_eyeX -= 0.01;
+        break;
+      case "ArrowUp":
+        g_eyeY -= 0.01;
+        break;
+      case "ArrowDown":
+        g_eyeY += 0.01;
+        break;
+      default:
+        return;
+    }
+    draw();
+  };
+
+  function draw() {
+    if (!gl) return;
+    viewMatrix.setLookAt(g_eyeX, g_eyeY, g_eyeZ, 0, 0, 0, 0, 1, 0);
+    gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLES, 0, n);
+  }
+
+  draw();
 }
